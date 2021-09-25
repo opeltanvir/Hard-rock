@@ -7,6 +7,7 @@ const searchSongs = async() =>{
     displaySongs(data.data);
 }
 
+
 const displaySongs = songs => {
     const songContainer = document.getElementById('song-container');
     songContainer.innerHTML = '';
@@ -33,12 +34,24 @@ const displaySongs = songs => {
 
 const getLyric = async (artist, title) => {
         const url = ` https://api.lyrics.ovh/v1/${artist}/${title}`;
+        try{
         const res = await fetch(url);
         const data = await res.json();
         displayLyrics(data.lyrics);
-}
+        }  
+
+        catch (error) {  
+            displayError ('sorry i failed to load lyrics')
+
+        }
+    }
 
 const displayLyrics = lyrics => {
     const lyricsDiv = document.getElementById('song-lyrics')
     lyricsDiv.innerText = lyrics;
+}
+
+const displayError = error => {
+    const errorTag = document.getElementById('error-message');
+    errorTag.innerText = error;
 }
